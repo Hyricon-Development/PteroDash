@@ -14,8 +14,8 @@
        }
     },
 "pterodactyl": {
-    "url": "",
-    "apikey": ""
+    "url": "panel.hyperian.com",
+    "apikey": "Application-Key"
 },
 "coins": {
     "enabled": true
