@@ -16,6 +16,37 @@
 "pterodactyl": {
     "url": "",
     "apikey": ""
+},
+"coins": {
+    "enabled": true
+},
+"store": {
+    "note": "You must have coins enabled for this to work",
+    "enabled": true,
+    "ram": {
+        "cost": 50,
+        "per": 1024
+    },
+    "disk": {
+        "cost": 50,
+        "per": 2048
+    },
+    "servers": {
+        "cost": 50,
+        "per": 1
+    },
+    "databases": {
+        "cost": 50,
+        "per": 1
+    },
+    "allocations": {
+        "cost": 50,
+        "per": 1
+    },
+    "backups": {
+        "cost": 50,
+        "per": 1
+    }
 }    
  }
    
