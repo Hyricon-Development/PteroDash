@@ -1,7 +1,6 @@
 "use strict";
 
 console.log(chalk.green("[Faliactyl] Loading Files..."));
-const antivpn = require("./handlers/antivpn")
 const config = require("./config.json");
 console.log(chalk.green("[Faliactyl] Files loaded"));
 
