@@ -1,0 +1,16 @@
+{
+    "name": "PterodactylDash",
+    "version": "1.0.0",
+    "description": "The best Pterodactyl Panel dashboard addition.",
+    "main": "index.js",
+    "author": "Hyperian",
+    "dependencies": {
+      "@keyv/mysql": "^1.1.5",
+      "ejs": "^3.1.6",
+      "keyv": "^4.0.4"
+    },
+    "scripts": {
+      "start": "node index.js",
+      "update": "bash scripts/update.sh"
+    }
+  }
