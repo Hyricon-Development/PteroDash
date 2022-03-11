@@ -1,5 +1,3 @@
-"use strict";
-
 console.log(chalk.green("[Faliactyl] Loading Files..."));
 const config = require("./config.json");
 console.log(chalk.green("[Faliactyl] Files loaded"));
