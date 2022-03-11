@@ -15,7 +15,7 @@ Making a free or paid host and need a way for users to sign up, earn coins, mana
 - Discord Webhook (Logs actions)
 - Legal (tos/pp in footer & its own page)
 
-# How do I install Faliactyl?
+# How do I install PterodactylDash?
 You can automaticly install PterodactylDash using the following command:
 
 ```bash <(curl -s https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/install.sh)```
