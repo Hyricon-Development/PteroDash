@@ -17,4 +17,5 @@ Making a free or paid host and need a way for users to sign up, earn coins, mana
 
 # How do I install Faliactyl?
 You can automaticly install PterodactylDash using the following command:
+
 ``bash <(curl -s https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/install.sh)``
