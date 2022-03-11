@@ -1,0 +1,22 @@
+{
+"port": 8080,
+"theme": "default",
+"version": "1.0.0",
+"auth0": {
+    "url": "dash.hyperian.com"
+},
+"database": {
+    "mysql": {
+        "host": "127.0.0.1",
+        "database": "PterodactylDash",
+        "username": "PterodactylDash",
+        "password": "Password"
+       }
+    },
+"pterodactyl": {
+    "url": "",
+    "apikey": ""
+  
+}    
+ }
+   
