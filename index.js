@@ -10,4 +10,3 @@ console.log(chalk.green("[Faliactyl] Files loaded"));
     console.log(chalk.green("----------------------------------------------------"));
     console.log(chalk.green("PterodactylDash is running on port " + config.port));
     console.log(chalk.green("----------------------------------------------------"));
-  });
