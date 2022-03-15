@@ -3,12 +3,13 @@
     "version": "1.0.0",
     "description": "The best Pterodactyl Panel dashboard addition.",
     "main": "index.js",
-    "author": "Hyperian",
+    "author": "Evolution Dev",
     "dependencies": {
       "@keyv/mysql": "^1.1.5",
       "ejs": "^3.1.6",
       "keyv": "^4.0.4",
-      "chalk": "^5.0.1"
+      "chalk": "^5.0.1",
+      "json": "^11.0.0 "
     },
     "scripts": {
       "start": "node index.js",
