@@ -1,7 +1,5 @@
 const fetch = require("node-fetch");
 const config = require('../handlers/sync').syncconfig().config;
-const functions = require("../../functions.js");
-const suspendCheck = require("../servers/suspension_system.js");
 const express = require("express");
 module.exports.load = async function (app) {
   app.get("/oauth2/discord", async (req, res) => {
