@@ -10,6 +10,13 @@ routes.load(app, db);
 console.log(chalk.green("[Faliactyl] Routes loaded"));
 });
 
+let oauth2 = fs.readdirSync('./routes/oauth2').filter(file => file.endsWith('.js'));
+oauth2.forEach(file => {
+
+let oauth2 = require(`./routes/oauth2${file}`);
+oauth2.load(app, db);
+});
+
 let handlers = fs.readdirSync('./handlers').filter(file => file.endsWith('.js'));
 handlers.forEach(file => {
 
