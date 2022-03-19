@@ -12,7 +12,7 @@
     },
 "pterodactyl": {
     "url": "panel.hyperian.com",
-    "comment": "Create a Aplication Key with all Read and Write Permissions",
+    "comment": "Create a Application Key with all Read and Write Permissions",
     "apikey": "Application-Key"
 },
 "api": {
