@@ -2,9 +2,6 @@
 "port": 8080,
 "theme": "default",
 "version": "1.0.0",
-"auth0": {
-    "url": "dash.hyperian.com"
-},
 "database": {
     "mysql": {
         "host": "127.0.0.1",
@@ -15,8 +12,83 @@
     },
 "pterodactyl": {
     "url": "panel.hyperian.com",
+    "comment": "Create a Aplication Key with all Read and Write Permissions",
     "apikey": "Application-Key"
 },
+"api": {
+   "comment": "You can enable PterodactylDash API",
+   "enabled": false,
+   "apikey": "Application-Key"
+},
+"discord": {
+    "oauth2": {
+        "warning": "Go to https://discord.dev/ and create a application",
+        "id": "Client ID of the application",
+        "secret": "Client Secret of the application",
+        "warning2": "Create a redirect link with your URL and /oauth/discord/callback, Example: https://dash.pterodash.net/oauth2/discord/callback",
+        "redirect": "Redirect Link"
+    },
+    "bot": {
+        "token": "",
+        "joinguild": {
+            "enabled": false,
+            "guildid": ["SERVERID", "SERVERID"],
+            "registeredrole": null
+        }
+    }
+},
+"j4r": {
+    "enabled": false,
+    "list": [
+        {
+            "name": "Example Name",
+            "invite": "Example Invite Link",
+            "guildid": "ServerID",
+            "coins": 50
+        },
+        {
+            "name": "Example Name",
+            "invite": "Example Invite Link",
+            "guildid": "ServerID",
+            "coins": 50
+        }
+    ]
+},
+"packages": {
+    "default": "default",
+    "list": {
+      "default": {
+        "ram": 1024,
+        "disk": 1024,
+        "cpu": 100,
+        "servers": 1
+      }
+    }
+},
+"locations": [
+    {
+        "id": 12,
+        "name": "Example Location",
+        "package": null
+    },
+    {
+        "id": 15,
+        "name": "Example Location",
+        "package": null
+    }
+],
+"eggs": [
+    {
+        "id": 6,
+        "name": "Example Egg",
+        "package": null
+    },
+    {
+        "id": 8,
+        "name": "Example Egg",
+        "package": null
+    }
+],
 "coins": {
     "enabled": true
 },
@@ -29,7 +101,7 @@
     },
     "disk": {
         "cost": 50,
-        "per": 2048
+        "per": 1024
     },
     "servers": {
         "cost": 50,
@@ -43,7 +115,7 @@
         "cost": 50,
         "per": 1
     },
-    "backups": {
+    "backup": {
         "cost": 50,
         "per": 1
         }

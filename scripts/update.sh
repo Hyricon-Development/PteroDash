@@ -1,5 +1,5 @@
-currentDir=$(pwd)
-if [[ "$currentDir" != *"PterodactylDash" && "$currentDir" != *"pteroactyldash" ]]; then
+directory=$(pwd)
+if [[ "$directory" != *"PterodactylDash" && "$directory" != *"pteroactyldash" ]]; then
   echo "Please run this script from the main PterodactylDash directory."
   exit 1
 fi
