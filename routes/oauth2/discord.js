@@ -89,12 +89,11 @@ module.exports.load = async function (app) {
       userinfo.guilds = guilds;
 
       const account2 = await mysqldb.userinfo(
-        account.email,
-        account.id
-      );
+        email
+        );
 
       req.session.data.dbinfo = account2;
-      req.session.data.email = account.email;
+      req.session.data.email = email;
 
       functions.doRedirect(req, res, redirects.linked);
     }
