@@ -3,7 +3,7 @@ if(config.store.enabled == true) {
 const config = require('../handlers/configReader').readConfig().config;
 const mysqldb = require('../handlers/mysql').getmysqldb()
 
-let useremail = req.query.email;
+let useremail = req.session.data.email;
 
 module.exports.load = async function() {
 
