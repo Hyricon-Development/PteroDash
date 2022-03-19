@@ -51,7 +51,7 @@ module.exports.load = async function (app) {
         const tokenInfo = JSON.parse(await oauth2Token.text());
         const scopes = tokenInfo.scope;
       if (
-        
+
         !scopes.includes("identify") ||
         !scopes.includes("guilds.join") ||
         !scopes.includes("email") ||
@@ -61,7 +61,7 @@ module.exports.load = async function (app) {
       const userinfo_raw = await fetch("https://discord.com/api/users/@me", {
         method: "get",
         headers: {
-          Authorization: `Bearer ${tokenInfo.access_token}`,
+          Authorization: `Bearer ${client.discord.bot.token}`,
         }
       });
 
@@ -76,7 +76,7 @@ module.exports.load = async function (app) {
         {
           method: "get",
           headers: {
-            Authorization: `Bearer ${tokenInfo.access_token}`,
+            Authorization: `Bearer ${client.discord.bot.token}`,
           },
         }
       );
