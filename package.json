@@ -10,7 +10,8 @@
       "keyv": "^4.0.4",
       "chalk": "^5.0.1",
       "fs": "^0.0.1-security",
-      "pm2": "^5.2.0"
+      "pm2": "^5.2.0",
+      "node-fetch": "^3.2.3"
     },
     "scripts": {
       "start": "pm2 start index.js",
