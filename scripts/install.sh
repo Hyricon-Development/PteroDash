@@ -58,7 +58,7 @@ fi
 echo "============================"
 echo "PteroDash Install Completed!"
 echo "============================"
-echo "You will have to manually setup settings.json"
+echo "You will have to manually setup config.json"
 fi
 
 elif [ "$OPTION" = "2" ]; then
