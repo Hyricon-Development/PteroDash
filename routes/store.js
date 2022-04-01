@@ -19,14 +19,14 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`coins-${useremail}`)) ? (await mysqldb.get(`coins-${useremail}`)) : 0;
+		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
 		if (coins < parseInt(config.store.ram.cost)) {
 
 			return res.send("You cannot afford this!");
 		}
 		if (!(coins = coins - parseInt(config.store.ram.cost))) {
 
-			await mysqldb.set(`coins-${useremail}`, coins)
+			await mysqldb.set(`${useremail}/coins`, coins)
 			let resources = await mysqldb.get(`resources-${useremail}`);
 			resources.ram = resources.ram + parseInt(config.store.ram.per);
 			await mysqldb.set(`resources-${useremail}`, resources);
@@ -47,14 +47,14 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`coins-${useremail}`)) ? (await mysqldb.get(`coins-${useremail}`)) : 0;
+		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
 		if (coins < parseInt(config.store.disk.cost)) {
 
 			return res.send("You cannot afford this!");
 		}
 		if (!(coins = coins - parseInt(config.store.disk.cost))) {
 
-			await mysqldb.set(`coins-${useremail}`, coins)
+			await mysqldb.set(`${useremail}/coins`, coins)
 			let resources = await mysqldb.get(`resources-${useremail}`);
 			resources.disk = resources.disk + parseInt(config.store.disk.per);
 			await mysqldb.set(`resources-${useremail}`, resources);
@@ -75,14 +75,14 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`coins-${useremail}`)) ? (await mysqldb.get(`coins-${useremail}`)) : 0;
+		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
 		if (coins < parseInt(config.store.cpu.cost)) {
 
 			return res.send("You cannot afford this!");
 		}
 		if (!(coins = coins - parseInt(config.store.cpu.cost))) {
 
-			await mysqldb.set(`coins-${useremail}`, coins)
+			await mysqldb.set(`${useremail}/coins`, coins)
 			let resources = await mysqldb.get(`resources-${useremail}`);
 			resources.cpu = resources.cpu + parseInt(config.store.cpu.per);
 			await mysqldb.set(`resources-${useremail}`, resources);
@@ -103,14 +103,14 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`coins-${useremail}`)) ? (await mysqldb.get(`coins-${useremail}`)) : 0;
+		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
 		if (coins < parseInt(config.store.servers.cost)) {
 
 			return res.send("You cannot afford this!");
 		}
 		if (!(coins = coins - parseInt(config.store.servers.cost))) {
 
-			await mysqldb.set(`coins-${useremail}`, coins)
+			await mysqldb.set(`${useremail}/coins`, coins)
 			let resources = await mysqldb.get(`resources-${useremail}`);
 			resources.servers = resources.servers + parseInt(config.store.servers.per);
 			await mysqldb.set(`resources-${useremail}`, resources);
@@ -131,14 +131,14 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`coins-${useremail}`)) ? (await mysqldb.get(`coins-${useremail}`)) : 0;
+		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
 		if (coins < parseInt(config.store.databases.cost)) {
 
 			return res.send("You cannot afford this!");
 		}
 		if (!(coins = coins - parseInt(config.store.databases.cost))) {
 
-			await mysqldb.set(`coins-${useremail}`, coins)
+			await mysqldb.set(`${useremail}/coins`, coins)
 			let resources = await mysqldb.get(`resources-${useremail}`);
 			resources.databases = resources.databases + parseInt(config.store.databases.per);
 			await mysqldb.set(`resources-${useremail}`, resources);
@@ -159,14 +159,14 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`coins-${useremail}`)) ? (await mysqldb.get(`coins-${useremail}`)) : 0;
+		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
 		if (coins < parseInt(config.store.allocations.cost)) {
 
 			return res.send("You cannot afford this!");
 		}
 		if (!(coins = coins - parseInt(config.store.allocations.cost))) {
 
-			await mysqldb.set(`coins-${useremail}`, coins)
+			await mysqldb.set(`${useremail}/coins`, coins)
 			let resources = await mysqldb.get(`resources-${useremail}`);
 			resources.allocations = resources.allocations + parseInt(config.store.allocations.per);
 			await mysqldb.set(`resources-${useremail}`, resources);
@@ -187,14 +187,14 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`coins-${useremail}`)) ? (await mysqldb.get(`coins-${useremail}`)) : 0;
+		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
 		if (coins < parseInt(config.store.backups.cost)) {
 
 			return res.send("You cannot afford this!");
 		}
 		if (!(coins = coins - parseInt(config.store.backups.cost))) {
 
-			await mysqldb.set(`coins-${useremail}`, coins)
+			await mysqldb.set(`${useremail}/coins`, coins)
 			let resources = await mysqldb.get(`resources-${useremail}`);
 			resources.backups = resources.backups + parseInt(config.store.backups.per);
 			await mysqldb.set(`resources-${useremail}`, resources);

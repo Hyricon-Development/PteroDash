@@ -12,7 +12,7 @@ bot.on('guildMemberUpdate', async (oldMember, newMember) => {
   
     if (!role && role2) {
     let useremail = req.session.data.email;
-	let coins = (await database.get(`${useremail}/coins`)) ? (await database.get(`${useremail}/coins`)) : 0;
+   	let coins = (await database.get(`${useremail}/coins`)) ? (await database.get(`${useremail}/coins`)) : 0;
     let coins2 = coins + parseInt(config.booster.coins)
     await database.set(`${useremail}/coins`, coins2)
   }
