@@ -51,5 +51,7 @@ console.log(chalk.green("Release: Beta v1.0.0"));
 console.log(chalk.green("----------------------------------------------------"));
 console.log(chalk.green("PteroDash is running on port " + listener.address().port));
 console.log(chalk.green("----------------------------------------------------"))
-  });
+});
+}else {
+  console.log(chalk.green("[PteroDash] Error while trying to load webserver"));
 }
