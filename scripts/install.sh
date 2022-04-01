@@ -24,24 +24,24 @@ elif [ "$OPTION" = "1" ]; then
 echo "============================="
 echo "Starting PteroDash Install..."
 echo "============================="
-sudo apt update 
-sudo apt install git
-sudo apt-get install nodejs
-sudo apt install npm
+sudo apt -y update 
+sudo apt -y install git
+sudo apt-get -y install nodejs
+sudo apt -y install npm
 cd /var/www
 sudo git clone https://github.com/Evolution-Development/PterodactylDash
 cd PterodactylDash
 sudo npm install
-sudo apt install nginx
+sudo apt -y install nginx
 echo "What is your domain? [dash.example.com]"
 read DOMAIN
 echo "Do you want to use SSL? Y/N"
 read SSL
 elif [ "$SSL" = "Y" ]; then
-apt install certbot
+sudo apt -y install certbot
 certbot certonly -d $DOMAIN
 sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTPS.conf
-sudo apt-get install jq 
+sudo apt-get -y install jq 
 port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
@@ -49,7 +49,7 @@ sudo systemctl restart nginx
 fi
 elif [ "$SSL" = "N"]; then
 sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTP.conf
-sudo apt-get install jq 
+sudo apt-get -y install jq 
 port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
@@ -65,10 +65,10 @@ elif [ "$OPTION" = "2" ]; then
 echo "=============================="
 echo "Starting Dependency Install..."
 echo "=============================="
-sudo apt update 
-sudo apt install git
-sudo apt-get install nodejs
-sudo apt install npm
+sudo apt -y update 
+sudo apt -y install git
+sudo apt -y-get install nodejs
+sudo apt -y install npm
 echo "============================="
 echo "Dependency Install Completed!"
 echo "============================="
@@ -91,16 +91,16 @@ elif [ "$OPTION" = "4" ]; then
 echo "======================================="
 echo "Starting Reverse Proxy Configuration..."
 echo "======================================="
-apt install nginx
+sudo apt -y install nginx
 echo "What is your domain? [dash.example.com]"
 read DOMAIN
 echo "Do you want to use SSL? Y/N"
 read SSL
 elif [ "$SSL" = "Y" ]; then
-apt install certbot
+apt -y install certbot
 certbot certonly -d $DOMAIN
 sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTPS.conf
-sudo apt-get install jq 
+sudo apt-get -y -y install jq 
 port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
@@ -108,7 +108,7 @@ sudo systemctl restart nginx
 fi
 elif [ "$SSL" = "N"]; then
 sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTP.conf
-sudo apt-get install jq 
+sudo apt-get -y install jq 
 port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
