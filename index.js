@@ -41,7 +41,7 @@ if (config.webserver.port < 1025) {
     console.log(chalk.red("[PteroDash] Webserver port must be greater than 1025"));
 };
 
-if (config.webserver.port > 1025 && config.webserver.port < 65535 && config.webserver.host != "https://dash.hyricon.com" && config.pterodactyl.url != "panel.hyricon.com") {
+if (config.webserver.port > 1025 && config.webserver.port < 65535 && config.webserver.host != "https://dash.hyricon.com" && config.pterodactyl.url != "https://panel.hyricon.com") {
     
 const listener = app.listen(config.webserver.port, function() {
 
