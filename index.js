@@ -3,6 +3,7 @@
 const chalk = require('chalk')
 const fs = require("fs");
 const config = require('../handlers/sync').syncconfig().config;
+const { bot } = require('../handlers/bot')
 
 let routes = fs.readdirSync('./routes').filter(file => file.endsWith('.js'));
 routes.forEach(file => {
@@ -55,3 +56,5 @@ console.log(chalk.green("----------------------------------------------------"))
 }else {
   console.log(chalk.green("[PteroDash] Error while trying to load webserver"));
 }
+
+bot()
