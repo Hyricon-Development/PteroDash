@@ -120,7 +120,7 @@ echo "======================================"
 fi
 
 elif [ "$OPTION" = "5" ]; then
-lv=$(grep -Po '"version":.*?[^\\]",' /var/www/PteroDash/scripts/assets/lv.json) 
+lv=$(curl -s 'https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/lv.json' | jq -r '.version')
 version=$(grep -Po '"version":.*?[^\\]",' /var/www/PteroDash/config.json) 
 if [ "$lv" =  "$version" ]; then
     echo "======================================================="
