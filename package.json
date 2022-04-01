@@ -1,22 +1,29 @@
 {
-    "name": "PterodactylDash",
+    "name": "PteroDash",
     "version": "1.0.0",
     "description": "The best Pterodactyl Panel dashboard addition.",
     "main": "index.js",
     "author": "Evolution Dev",
     "dependencies": {
       "@keyv/mysql": "^1.1.5",
-      "ejs": "^3.1.6",
+      "@keyv/redis": "^2.2.3",
+      "@keyv/sqlite": "^3.0.0",
+      "@keyv/mongo": "^2.1.0",
+      "@keyv/postgres": "^1.2.0",
+      "@keyv/etcd": "^1.0.1",
       "keyv": "^4.0.4",
+      "ejs": "^3.1.6",
       "chalk": "^5.0.1",
       "fs": "^0.0.1-security",
       "pm2": "^5.2.0",
-      "node-fetch": "^3.2.3"
+      "node-fetch": "^3.2.3",
+      "discord.js": "^13.6.0"
     },
     "scripts": {
-      "start": "pm2 start index.js",
-      "stop": "pm2 stop index.js",
-      "update": "bash scripts/update.sh",
-      "logs": "pm2 logs"
+      "pterodash": "pm2 start index.js",
+      "pterodash --debug":"node index.js",
+      "pterodash --stop": "pm2 stop index.js",
+      "pterodash --update": "bash scripts/update.sh",
+      "pterodash --logs": "pm2 logs index.js"
     }
   }

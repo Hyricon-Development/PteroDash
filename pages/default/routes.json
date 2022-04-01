@@ -1,5 +1,13 @@
 {
+    "index": "index.ejs",
+    "admin": {
+        "setcoins": "admin/setcoins.ejs",
+        "userinfo": "admin/userinfo.ejs",
+        "coupon": "admin/coupon.ejs",
+        "package": "admin/package.ejs"
+    },
     "pages": {
-        "index": "index.ejs"
+        "login": "login.ejs",
+        "store": "store.ejs"
     }
 }

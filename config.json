@@ -1,17 +1,26 @@
 {
-"port": 8080,
 "theme": "default",
 "version": "1.0.0",
-"database": {
-    "mysql": {
-        "host": "127.0.0.1",
-        "database": "PterodactylDash",
-        "username": "PterodactylDash",
-        "password": "Password"
-       }
-    },
+"webserver": {
+    "port": 8080,
+    "note": "Replace https://dash.hyricon.com with your URL",
+    "host": "https://dash.hyricon.com"
+},
+"databases": {
+    "note": "Select the database you would like to use",
+    "note2": "Supported Databases: mysql, sqlite, postgres, redis, mongo, etcd",
+    "select": "sqlite",
+    "connection": {
+        "note": "You do not need to fill these in if you selected sqlite.",
+        "host": "192.168.0.1",
+        "port": 3306,
+        "username": "PteroDash",
+        "password": "Pa$$w0rd",
+        "database": "PteroDash"
+    }
+},
 "pterodactyl": {
-    "url": "panel.hyperian.com",
+    "url": "https://panel.hyricon.com",
     "comment": "Create a Application Key with all Read and Write Permissions",
     "apikey": "Application-Key"
 },
@@ -21,18 +30,25 @@
    "apikey": "Application-Key"
 },
 "discord": {
+    "warning": "Go to https://discord.dev/ and create a application",
     "oauth2": {
-        "warning": "Go to https://discord.dev/ and create a application",
         "id": "Client ID of the application",
         "secret": "Client Secret of the application",
-        "warning2": "Create a redirect link with your URL and /oauth/discord/callback, Example: https://dash.pterodash.net/oauth2/discord/callback",
-        "redirect": "Redirect Link"
+        "redirects": {
+            "warning": "Create a redirect link with your URL and /oauth/discord/login/callback, Example: https://dash.pterodash.net/oauth2/discord/login/callback",
+            "login": "Redirect Link",
+            "warning2": "Create a redirect link with your URL and /oauth/discord/signup/callback, Example: https://dash.pterodash.net/oauth2/discord/signup/callback",
+            "signup": "Redirect Link",
+            "warning3": "Create a redirect link with your URL and /accounts/discord/link/callback, Example: https://dash.pterodash.net/accounts/discord/link/callback",
+            "link": "Redirect Link"
+        }
     },
     "bot": {
-        "token": "",
+        "token": "Token of the application",
         "joinguild": {
+            "note": "Enable this to turn on force join",
             "enabled": false,
-            "guildid": ["SERVERID", "SERVERID"],
+            "guildid": "ServerID",
             "registeredrole": null
         }
     }
@@ -53,6 +69,12 @@
             "coins": 50
         }
     ]
+},
+"booster": {
+    "note": "Enable this for automatic boost rewards",
+    "enabled": false,
+    "roleid": "RoleID of the server booster role",
+    "coins": 200
 },
 "packages": {
     "default": "default",

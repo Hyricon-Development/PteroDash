@@ -1,7 +1,9 @@
 if(config.store.enabled == true) {
-	
-const config = require('../handlers/configReader').readConfig().config;
-const mysqldb = require('../handlers/mysql').getmysqldb()
+
+"use strict";	
+
+const config = require('../handlers/sync').syncconfig().config;
+const mysqldb = require('../handlers/databases').getdatabase().database
 
 let useremail = req.session.data.email;
 
@@ -30,12 +32,12 @@ module.exports.load = async function() {
 			await mysqldb.set(`resources-${useremail}`, resources);
 		} else {
 
-			return res.redirect("/?error=" + encodeURIComponent("An error has occured"));
+			return res.redirect("/?error=An error has occured");
 		}
-		return res.redirect("/?purchased=" + encodeURIComponent("Successfully purchased Disk"));
+		return res.redirect("/?purchased=Successfully purchased Disk");
 	});
 
-	app.get("/purchase/disk", async (req, res) => {
+	app.get("/purchase/disk", async (res) => {
 
 		if (!(await mysqldb.get(`user-${useremail}`))) {
 
@@ -58,9 +60,9 @@ module.exports.load = async function() {
 			await mysqldb.set(`resources-${useremail}`, resources);
 		} else {
 
-			return res.redirect("/?error=" + encodeURIComponent("An error has occured"));
+			return res.redirect("/?error=An error has occured");
 		}
-		return res.redirect("/?purchased=" + encodeURIComponent("Successfully purchased RAM"));
+		return res.redirect("/?purchased=Successfully purchased RAM");
 	});
 
 	app.get("/purchase/cpu", async (req, res) => {
@@ -86,9 +88,9 @@ module.exports.load = async function() {
 			await mysqldb.set(`resources-${useremail}`, resources);
 		} else {
 
-			return res.redirect("/?error=" + encodeURIComponent("An error has occured"));
+			return res.redirect("/?error=An error has occured");
 		}
-		return res.redirect("/?purchased=" + encodeURIComponent("Successfully purchased CPUs"));
+		return res.redirect("/?purchased=Successfully purchased CPUs");
 	});
 
 	app.get("/purchase/servers", async (req, res) => {
@@ -114,9 +116,9 @@ module.exports.load = async function() {
 			await mysqldb.set(`resources-${useremail}`, resources);
 		} else {
 
-			return res.redirect("/?error=" + encodeURIComponent("An error has occured"));
+			return res.redirect("/?error=An error has occured");
 		}
-		return res.redirect("/?purchased=" + encodeURIComponent("Successfully purchased Servers"));
+		return res.redirect("/?purchased=Successfully purchased Servers");
 	});
 
 	app.get("/purchase/databases", async (req, res) => {
@@ -142,9 +144,9 @@ module.exports.load = async function() {
 			await mysqldb.set(`resources-${useremail}`, resources);
 		} else {
 
-			return res.redirect("/?error=" + encodeURIComponent("An error has occured"));
+			return res.redirect("/?error=An error has occured");
 		}
-		return res.redirect("/?purchased=" + encodeURIComponent("Successfully purchased Databases"));
+		return res.redirect("/?purchased=Successfully purchased Databases");
 	});
 
 	app.get("/purchase/allocations", async (req, res) => {
@@ -170,9 +172,9 @@ module.exports.load = async function() {
 			await mysqldb.set(`resources-${useremail}`, resources);
 		} else {
 
-			return res.redirect("/?error=" + encodeURIComponent("An error has occured"));
+			return res.redirect("/?error=An error has occured");
 		}
-		return res.redirect("/?purchased=" + encodeURIComponent("Successfully purchased Allocations"));
+		return res.redirect("/?purchased=Successfully purchased Allocations");
 	});
 
 	app.get("/purchase/backups", async (req, res) => {
@@ -198,9 +200,9 @@ module.exports.load = async function() {
 			await mysqldb.set(`resources-${useremail}`, resources);
 		} else {
 
-			return res.redirect("/?error=" + encodeURIComponent("An error has occured"));
+			return res.redirect("/?error=An error has occured");
 		}
-		return res.redirect("/?purchased=" + encodeURIComponent("Successfully purchased Backups"));
+		return res.redirect("/?purchased=Successfully purchased Backups");
 	});
   }
 }
