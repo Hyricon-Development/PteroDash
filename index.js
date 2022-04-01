@@ -12,20 +12,6 @@ let routes = require(`./routes/${file}`);
 routes.load(app, db);
 });
 
-let oauth2 = fs.readdirSync('./routes/oauth2').filter(file => file.endsWith('.js'));
-oauth2.forEach(file => {
-
-let oauth2 = require(`./routes/oauth2${file}`);
-oauth2.load(app, db);
-});
-
-let link = fs.readdirSync('./routes/link').filter(file => file.endsWith('.js'));
-link.forEach(file => {
-
-let link = require(`./routes/link${file}`);
-link.load(app, db);
-});
-
 if (config.pterodactyl.url = "https://panel.hyricon.com") {
   console.log(chalk.red("[PteroDash] Invalid Pterodactyl URL"));
 };
