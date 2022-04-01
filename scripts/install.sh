@@ -29,7 +29,7 @@ sudo apt -y install git
 sudo apt-get -y install nodejs
 sudo apt -y install npm
 cd /var/www
-sudo git clone https://github.com/Evolution-Development/PterodactylDash
+sudo git clone https://github.com/Evolution-Development/PterodactylDash.git
 cd PterodactylDash
 sudo npm install
 sudo apt -y install nginx
@@ -79,7 +79,7 @@ echo "========================"
 echo "Starting File Install..."
 echo "========================"
 cd /var/www
-sudo git clone https://github.com/Evolution-Development/PterodactylDash
+sudo git clone https://github.com/Evolution-Development/PterodactylDash.git
 cd PterodactylDash
 sudo npm install
 echo "======================="
@@ -121,7 +121,7 @@ fi
 
 elif [ "$OPTION" = "5" ]; then
 lv=$(curl -s 'https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/lv.json' | jq -r '.version')
-version=$(grep -Po '"version":.*?[^\\]",' /var/www/PteroDash/config.json) 
+version=$(grep -Po '"version":.*?[^\\]",' /var/www/PterodactylDash/config.json) 
 if [ "$lv" =  "$version" ]; then
     echo "======================================================="
     echo "You're running the latest version of PteroDash."
