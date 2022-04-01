@@ -132,7 +132,6 @@ if [ "$lv" =  "$version" ]; then
     echo "Would you like to update to the latest version? [Y/N]"
     echo "======================================================="
     read UPDATE_OPTION
-    fi
     if [ "$UPDATE_OPTION" = "Y" ]; then
     echo "========================="
     echo "Running Update Script..."
