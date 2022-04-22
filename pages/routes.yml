@@ -1,0 +1,18 @@
+admin: 
+  setcoins: admin/setcoins.ejs
+  userinfo: admin/userinfo.ejs
+  coupon: admin/coupon.ejs
+  package: admin/package.ejs
+  
+pages:
+  login: login.ejs
+  home: home.ejs
+  store: store.ejs
+  server/create: create.ejs
+  earn: earn.ejs
+  lv: lv.ejs
+  j4r: j4r.ejs
+
+redirects:  
+  invalid_amount: /store?error=Invalid_Amount
+  cant_afford: /store?error=Cant_Afford

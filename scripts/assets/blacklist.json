@@ -1,0 +1,12 @@
+{
+    "blacklist": [
+        {
+            "domain": "client.abusenodes.com",
+            "reason": "Free Trials"
+        },
+        {
+            "domain": "client.hexalnodes.com",
+            "reason": "Free Trials"
+        }
+    ]
+}

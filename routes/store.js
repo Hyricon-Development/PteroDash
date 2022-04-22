@@ -1,35 +1,42 @@
-if(config.store.enabled == true) {
-
 "use strict";	
 
-const config = require('../handlers/sync').syncconfig().config;
-const mysqldb = require('../handlers/databases').getdatabase().database
+const config = require('../handlers/sync').syncconfig();
+const routes = require('../handlers/sync').syncroutes();	
+const db = require('../handlers/databases').getdatabase()
 
-let useremail = req.session.data.email;
+var useremail = req.session.data.email;
 
-module.exports.load = async function() {
+if(config.store.enabled == true) {
+module.exports.load = async function(webserver) {
 
-	app.get("/purchase/ram", async (res) => {
+	webserver.get("/purchase/ram", async (res, req) => {
 
-		if (!(await mysqldb.get(`user-${useremail}`))) {
+		let amount = req.query.amount;
+
+		if (!amount) {
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
+		if (amount < 1 || amount > 10) {
+
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
+		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
 		}
-		if (amount < 1 || amount > 10) {
-
-			return res.send("Amount must be in numbers");
-		}
-		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
+		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.ram.cost)) {
 
-			return res.send("You cannot afford this!");
+			res.redirect(routes.redirects.cant_afford)
 		}
 		if (!(coins = coins - parseInt(config.store.ram.cost))) {
 
-			await mysqldb.set(`${useremail}/coins`, coins)
-			let resources = await mysqldb.get(`resources-${useremail}`);
+			await db.set(`coins-${useremail}`, coins)
+			let resources = await db.get(`resources-${useremail}`);
 			resources.ram = resources.ram + parseInt(config.store.ram.per);
-			await mysqldb.set(`resources-${useremail}`, resources);
+			await db.set(`resources-${useremail}`, resources);
 		} else {
 
 			return res.redirect("/?error=An error has occured");
@@ -37,9 +44,9 @@ module.exports.load = async function() {
 		return res.redirect("/?purchased=Successfully purchased Disk");
 	});
 
-	app.get("/purchase/disk", async (res) => {
+	webserver.get("/purchase/disk", async (res) => {
 
-		if (!(await mysqldb.get(`user-${useremail}`))) {
+		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
 		}
@@ -47,17 +54,17 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
+		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.disk.cost)) {
 
-			return res.send("You cannot afford this!");
+			res.redirect(routes.redirects.cant_afford)
 		}
 		if (!(coins = coins - parseInt(config.store.disk.cost))) {
 
-			await mysqldb.set(`${useremail}/coins`, coins)
-			let resources = await mysqldb.get(`resources-${useremail}`);
+			await db.set(`coins-${useremail}`, coins)
+			let resources = await db.get(`resources-${useremail}`);
 			resources.disk = resources.disk + parseInt(config.store.disk.per);
-			await mysqldb.set(`resources-${useremail}`, resources);
+			await db.set(`resources-${useremail}`, resources);
 		} else {
 
 			return res.redirect("/?error=An error has occured");
@@ -65,9 +72,9 @@ module.exports.load = async function() {
 		return res.redirect("/?purchased=Successfully purchased RAM");
 	});
 
-	app.get("/purchase/cpu", async (req, res) => {
+	webserver.get("/purchase/cpu", async (res) => {
 
-		if (!(await mysqldb.get(`user-${useremail}`))) {
+		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
 		}
@@ -75,17 +82,17 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
+		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.cpu.cost)) {
 
-			return res.send("You cannot afford this!");
+			res.redirect(routes.redirects.cant_afford)
 		}
 		if (!(coins = coins - parseInt(config.store.cpu.cost))) {
 
-			await mysqldb.set(`${useremail}/coins`, coins)
-			let resources = await mysqldb.get(`resources-${useremail}`);
+			await db.set(`coins-${useremail}`, coins)
+			let resources = await db.get(`resources-${useremail}`);
 			resources.cpu = resources.cpu + parseInt(config.store.cpu.per);
-			await mysqldb.set(`resources-${useremail}`, resources);
+			await db.set(`resources-${useremail}`, resources);
 		} else {
 
 			return res.redirect("/?error=An error has occured");
@@ -93,9 +100,9 @@ module.exports.load = async function() {
 		return res.redirect("/?purchased=Successfully purchased CPUs");
 	});
 
-	app.get("/purchase/servers", async (req, res) => {
+	webserver.get("/purchase/servers", async (res) => {
 
-		if (!(await mysqldb.get(`user-${useremail}`))) {
+		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
 		}
@@ -103,17 +110,17 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
+		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.servers.cost)) {
 
-			return res.send("You cannot afford this!");
+			res.redirect(routes.redirects.cant_afford)
 		}
 		if (!(coins = coins - parseInt(config.store.servers.cost))) {
 
-			await mysqldb.set(`${useremail}/coins`, coins)
-			let resources = await mysqldb.get(`resources-${useremail}`);
+			await db.set(`coins-${useremail}`, coins)
+			let resources = await db.get(`resources-${useremail}`);
 			resources.servers = resources.servers + parseInt(config.store.servers.per);
-			await mysqldb.set(`resources-${useremail}`, resources);
+			await db.set(`resources-${useremail}`, resources);
 		} else {
 
 			return res.redirect("/?error=An error has occured");
@@ -121,9 +128,9 @@ module.exports.load = async function() {
 		return res.redirect("/?purchased=Successfully purchased Servers");
 	});
 
-	app.get("/purchase/databases", async (req, res) => {
+	webserver.get("/purchase/databases", async (res) => {
 
-		if (!(await mysqldb.get(`user-${useremail}`))) {
+		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
 		}
@@ -131,17 +138,17 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
+		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.databases.cost)) {
 
-			return res.send("You cannot afford this!");
+			res.redirect(routes.redirects.cant_afford)
 		}
 		if (!(coins = coins - parseInt(config.store.databases.cost))) {
 
-			await mysqldb.set(`${useremail}/coins`, coins)
-			let resources = await mysqldb.get(`resources-${useremail}`);
+			await db.set(`coins-${useremail}`, coins)
+			let resources = await db.get(`resources-${useremail}`);
 			resources.databases = resources.databases + parseInt(config.store.databases.per);
-			await mysqldb.set(`resources-${useremail}`, resources);
+			await db.set(`resources-${useremail}`, resources);
 		} else {
 
 			return res.redirect("/?error=An error has occured");
@@ -149,9 +156,9 @@ module.exports.load = async function() {
 		return res.redirect("/?purchased=Successfully purchased Databases");
 	});
 
-	app.get("/purchase/allocations", async (req, res) => {
+	webserver.get("/purchase/allocations", async (res) => {
 
-		if (!(await mysqldb.get(`user-${useremail}`))) {
+		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
 		}
@@ -159,17 +166,17 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
+		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.allocations.cost)) {
 
-			return res.send("You cannot afford this!");
+			res.redirect(routes.redirects.cant_afford)
 		}
 		if (!(coins = coins - parseInt(config.store.allocations.cost))) {
 
-			await mysqldb.set(`${useremail}/coins`, coins)
-			let resources = await mysqldb.get(`resources-${useremail}`);
+			await db.set(`coins-${useremail}`, coins)
+			let resources = await db.get(`resources-${useremail}`);
 			resources.allocations = resources.allocations + parseInt(config.store.allocations.per);
-			await mysqldb.set(`resources-${useremail}`, resources);
+			await db.set(`resources-${useremail}`, resources);
 		} else {
 
 			return res.redirect("/?error=An error has occured");
@@ -177,9 +184,9 @@ module.exports.load = async function() {
 		return res.redirect("/?purchased=Successfully purchased Allocations");
 	});
 
-	app.get("/purchase/backups", async (req, res) => {
+	webserver.get("/purchase/backups", async (res) => {
 
-		if (!(await mysqldb.get(`user-${useremail}`))) {
+		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
 		}
@@ -187,17 +194,17 @@ module.exports.load = async function() {
 
 			return res.send("Amount must be in numbers");
 		}
-		let coins = (await mysqldb.get(`${useremail}/coins`)) ? (await mysqldb.get(`${useremail}/coins`)) : 0;
+		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.backups.cost)) {
 
-			return res.send("You cannot afford this!");
+			res.redirect(routes.redirects.cant_afford)
 		}
 		if (!(coins = coins - parseInt(config.store.backups.cost))) {
 
-			await mysqldb.set(`${useremail}/coins`, coins)
-			let resources = await mysqldb.get(`resources-${useremail}`);
+			await db.set(`coins-${useremail}`, coins)
+			let resources = await db.get(`resources-${useremail}`);
 			resources.backups = resources.backups + parseInt(config.store.backups.per);
-			await mysqldb.set(`resources-${useremail}`, resources);
+			await db.set(`resources-${useremail}`, resources);
 		} else {
 
 			return res.redirect("/?error=An error has occured");

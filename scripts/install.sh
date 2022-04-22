@@ -4,15 +4,8 @@ echo "================================="
 echo "Offical PteroDash install script"
 echo "By ! Rian#0001"
 echo "================================="
-
-if [ "$lsb_dist" =  "ubuntu" ]; then
-    echo "====================================================================="
-    echo "This script currently is only available for Ubuntu."
-    echo "====================================================================="
-    fi
-
 echo "Please select your installation option:"
-echo "[1] Full Fresh PteroDash Install (Dependencies, Files, Reverse Proxy Configuration)"
+echo "[1] Full PteroDash Install (Dependencies, Files, Reverse Proxy Configuration)"
 echo "[2] Install the Dependencies."
 echo "[3] Install the Files"
 echo "[4] Create and configure a reverse proxy"
@@ -27,21 +20,21 @@ echo "============================="
 sudo apt -y update 
 sudo apt -y install git
 sudo apt-get -y install nodejs
+sudo apt-get -y install jq 
+sudo apt -y install nginx
 sudo apt -y install npm
 cd /var/www
 sudo git clone https://github.com/Evolution-Development/PterodactylDash.git
 cd PterodactylDash
 sudo npm install
-sudo apt -y install nginx
 echo "What is your domain? [dash.example.com]"
 read DOMAIN
-echo "Do you want to use SSL? Y/N"
+echo "Do you want to use SSL? [Y/N]"
 read SSL
 elif [ "$SSL" = "Y" ]; then
 sudo apt -y install certbot
 certbot certonly -d $DOMAIN
 sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTPS.conf
-sudo apt-get -y install jq 
 port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
@@ -49,7 +42,6 @@ sudo systemctl restart nginx
 fi
 elif [ "$SSL" = "N"]; then
 sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTP.conf
-sudo apt-get -y install jq 
 port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
@@ -59,6 +51,7 @@ echo "============================"
 echo "PteroDash Install Completed!"
 echo "============================"
 echo "You will have to manually setup config.json"
+exit 1
 fi
 
 elif [ "$OPTION" = "2" ]; then
@@ -67,11 +60,12 @@ echo "Starting Dependency Install..."
 echo "=============================="
 sudo apt -y update 
 sudo apt -y install git
-sudo apt -y-get install nodejs
+sudo apt-get -y install nodejs
 sudo apt -y install npm
 echo "============================="
 echo "Dependency Install Completed!"
 echo "============================="
+exit 1
 fi
 
 elif [ "$OPTION" = "3" ]; then
@@ -85,6 +79,7 @@ sudo npm install
 echo "======================="
 echo "File Install Completed!"
 echo "======================="
+exit 1
 fi
 
 elif [ "$OPTION" = "4" ]; then
@@ -94,7 +89,7 @@ echo "======================================="
 sudo apt -y install nginx
 echo "What is your domain? [dash.example.com]"
 read DOMAIN
-echo "Do you want to use SSL? Y/N"
+echo "Do you want to use SSL? [Y/N]"
 read SSL
 elif [ "$SSL" = "Y" ]; then
 apt -y install certbot
@@ -117,12 +112,13 @@ fi
 echo "======================================"
 echo "Reverse Proxy Configuration Completed!"
 echo "======================================"
+exit 1
 fi
 
 elif [ "$OPTION" = "5" ]; then
+sudo apt-get -y -y install jq 
 lv=$(curl -s 'https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/lv.json' | jq -r '.version')
-version=$(grep -Po '"version":.*?[^\\]",' /var/www/PterodactylDash/config.json) 
-if [ "$lv" =  "$version" ]; then
+if [ "$lv" =  "1.0.0" ]; then
     echo "======================================================="
     echo "You're running the latest version of PteroDash."
     echo "======================================================="
@@ -133,12 +129,8 @@ if [ "$lv" =  "$version" ]; then
     echo "======================================================="
     read UPDATE_OPTION
     if [ "$UPDATE_OPTION" = "Y" ]; then
-    echo "========================="
-    echo "Running Update Script..."
-    echo "========================="
     bash <(curl -s https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/update.sh) 
-    echo "================================"
-    echo "Successfully Updated PteroDash!"
-    echo "================================"
     fi
+  fi
+    exit 1
 fi

@@ -1,0 +1,131 @@
+name: PteroDash
+webserver:
+  port: 8080
+  host: https://dash.example.com
+  secret: Secret # Season Secret
+
+smtp:
+  mailfrom: support@example.com
+  host: 192.168.0.1
+  port: 4242
+  username: PteroDash
+  password: Pa$$w0rd
+
+database:
+  select: sqlite # Select the database for PteroDash
+  connection: 
+    host: 192.168.0.1
+    port: 3306
+    username: PteroDash
+    password: Pa$$w0rd
+    database: PteroDash
+
+pterodactyl:
+  url: https://panel.hyricon.com
+  api: Application-Key # Create a Application Key with all Read and Write Permissions
+
+discord: # Go to https://discord.dev and create a application
+    id: Client ID of the application
+    secret: Client Secret of the application
+    token: Token of the application
+    joinguild: # Enable this for force join
+      enabled: false
+      guildid: ServerID
+      registeredrole: null
+    redirects: # Create the redirect links with your URL and the following callback paths and then replace the redirects
+      login: https://dash.example.com/oauth/discord/login/callback # /oauth/discord/login/callback
+      signup: https://dash.example.com/oauth/discord/signup/callback # /oauth/discord/signup/callback
+      link: https://dash.example.com/accounts/discord/link/callback # /accounts/discord/link/callback
+
+j4r:
+  enabled: false
+  list:
+  - name: Example Name
+    invite: Example Invite Link
+    guildid: ServerID
+    coins: 50
+  - name: Example Name
+    invite: Example Invite Link
+    guildid: ServerID
+    coins: 50
+
+RolePackage: 
+  enabled: false
+  guildid: SERVERID # Replace SERVERID with your Server/Guild ID
+  list:
+    ROLEID: PACKAGE 
+
+api:
+  enabled: false # Set enabled to "true" if you want to enable the PteroDash API system
+  token: Token
+
+admin: 
+  enabled: true
+  - EMAIL
+
+packages:
+  default: default
+  list:
+    default:
+      ram: 1024
+      disk: 1024
+      cpu: 100
+      servers: 1
+      databases: 1
+      allocations: 2
+      backups: 3
+
+locations:
+- id: 12
+  name: Example Location
+  package: null
+- id: 15
+  name: Example Location
+  package: null
+
+eggs:
+- id: 6
+  name: Example Egg
+  package: null
+- id: 8
+  name: Example Egg
+  package: null
+
+coins: # Enable this for the coins system
+  enabled: true
+
+store: # You must have coins enabled for this to work
+  enabled: true
+  ram:
+    cost: 50
+    per: 1024
+  disk:
+    cost: 50
+    per: 1024 
+  servers:
+    cost: 50
+    per: 1
+  databases:
+    cost: 50
+    per: 1
+  allocations:
+    cost: 50
+    per: 1
+  backup:
+    cost: 50
+    per: 1
+
+WidgetBot:
+  enabled: false
+  guildid: SERVERID # Replace SERVERID with your Server/Guild ID
+
+arcio:
+  enabled: false
+  widgetid: WIDGETID # Replace WIDGETID with your arc.io Widget ID
+
+minero:
+  enabled: false
+  key: PUBLICKEY # Replace PUBLICKEY with your minero.cc Public Key
+  DonateWidget: true 
+
+
