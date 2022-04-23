@@ -1,6 +1,5 @@
 const nodemailer = require("nodemailer");
 const db = require('../handlers/databases').getdatabase()
-const strings = require('../handlers/strings').makeid()
 const config = require('../handlers/sync').syncconfig()
 const routes = require('../handlers/sync').syncroutes()
 
