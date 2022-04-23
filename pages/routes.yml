@@ -13,6 +13,9 @@ pages:
   lv: lv.ejs
   j4r: j4r.ejs
 
-redirects:  
+redirects: 
+  callback: /home
   invalid_amount: /store?error=Invalid_Amount
   cant_afford: /store?error=Cant_Afford
+  store_error: /store?error=An_Error_Occured
+  store_sucess: /store?sucess=true

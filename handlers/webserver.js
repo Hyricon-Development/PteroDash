@@ -1,11 +1,11 @@
 const express = require("express");
+const webserver = express();
 const expressWs = require('express-ws')(webserver);
 const ejs = require("ejs");
 const session = require("express-session");
 const config = require('../handlers/sync').syncconfig();
 const chalk = require('chalk')
 
-const webserver = express();
 module.exports.webserver = webserver;
 
 webserver.use(session({

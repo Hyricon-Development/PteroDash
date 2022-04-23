@@ -39,20 +39,27 @@ module.exports.load = async function(webserver) {
 			await db.set(`resources-${useremail}`, resources);
 		} else {
 
-			return res.redirect("/?error=An error has occured");
+			return res.redirect("/?error=An_error_has_occured");
 		}
 		return res.redirect("/?purchased=Successfully purchased Disk");
 	});
 
 	webserver.get("/purchase/disk", async (res) => {
 
+		let amount = req.query.amount;
+
+		if (!amount) {
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
+		if (amount < 1 || amount > 10) {
+
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
 		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
-		}
-		if (amount < 1 || amount > 10) {
-
-			return res.send("Amount must be in numbers");
 		}
 		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.disk.cost)) {
@@ -74,13 +81,20 @@ module.exports.load = async function(webserver) {
 
 	webserver.get("/purchase/cpu", async (res) => {
 
+		let amount = req.query.amount;
+
+		if (!amount) {
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
+		if (amount < 1 || amount > 10) {
+
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
 		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
-		}
-		if (amount < 1 || amount > 10) {
-
-			return res.send("Amount must be in numbers");
 		}
 		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.cpu.cost)) {
@@ -102,13 +116,20 @@ module.exports.load = async function(webserver) {
 
 	webserver.get("/purchase/servers", async (res) => {
 
+		let amount = req.query.amount;
+
+		if (!amount) {
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
+		if (amount < 1 || amount > 10) {
+
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
 		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
-		}
-		if (amount < 1 || amount > 10) {
-
-			return res.send("Amount must be in numbers");
 		}
 		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.servers.cost)) {
@@ -130,13 +151,20 @@ module.exports.load = async function(webserver) {
 
 	webserver.get("/purchase/databases", async (res) => {
 
+		let amount = req.query.amount;
+
+		if (!amount) {
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
+		if (amount < 1 || amount > 10) {
+
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
 		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
-		}
-		if (amount < 1 || amount > 10) {
-
-			return res.send("Amount must be in numbers");
 		}
 		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.databases.cost)) {
@@ -158,13 +186,20 @@ module.exports.load = async function(webserver) {
 
 	webserver.get("/purchase/allocations", async (res) => {
 
+		let amount = req.query.amount;
+
+		if (!amount) {
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
+		if (amount < 1 || amount > 10) {
+
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
 		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
-		}
-		if (amount < 1 || amount > 10) {
-
-			return res.send("Amount must be in numbers");
 		}
 		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.allocations.cost)) {
@@ -186,13 +221,20 @@ module.exports.load = async function(webserver) {
 
 	webserver.get("/purchase/backups", async (res) => {
 
+		let amount = req.query.amount;
+
+		if (!amount) {
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
+		if (amount < 1 || amount > 10) {
+
+			res.redirect(routes.redirects.invalid_amount)
+		}
+
 		if (!(await db.get(`user-${useremail}`))) {
 
 			res.redirect("/login")
-		}
-		if (amount < 1 || amount > 10) {
-
-			return res.send("Amount must be in numbers");
 		}
 		let coins = (await db.get(`coins-${useremail}`)) ? (await db.get(`coins-${useremail}`)) : 0;
 		if (coins < parseInt(config.store.backups.cost)) {

@@ -9,27 +9,27 @@ read OPTION
 
 elif [ "$OPTION" = "Y" ]; then
 
-if [ -d "/var/www/PterodactylDash/Backup" ]; then
-  rm -r /var/www/PterodactylDash/Backup
+if [ -d "/var/www/PteroDash/Backup" ]; then
+  rm -r /var/www/PteroDash/Backup
 fi
 
-mv /var/www/PterodactylDash /var/www/PterodactylDash/Backup
+mv /var/www/PteroDash /var/www/PteroDash/Backup
 cd /var/www
-git clone https://github.com/Evolution-Development/PterodactylDash.git
-cd PterodactylDash
+git clone https://github.com/Evolution-Development/PteroDash.git
+cd PteroDash
 npm install
 
 gitlog=$(git log -1 --pretty=%B)
 if [[ "$gitlog" == *"config-updated"* ]]; then
 
-  cp /var/www/PterodactylDash/Backup/config.json /var/www/PterodactylDash/config.json.backup
+  cp /var/www/PteroDash/Backup/config.json /var/www/PteroDash/config.json.backup
   echo "=========================================================================================="
   echo "You will have to merge your config.json manually, it has been saved as config.json.backup"
   echo "After you are done merging, restart PteroDash using systemctl restart pterodash"
   echo "=========================================================================================="
   else
-  rm /var/www/PterodactylDash/config.json
-  cp /var/www/PterodactylDash/Backup/config.json /var/www/PterodactylDash/config.json
+  rm /var/www/PteroDash/config.json
+  cp /var/www/PteroDash/Backup/config.json /var/www/PteroDash/config.json
   echo "PteroDash has been successfully updated"
   fi
 fi

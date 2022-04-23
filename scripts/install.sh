@@ -24,8 +24,8 @@ sudo apt-get -y install jq
 sudo apt -y install nginx
 sudo apt -y install npm
 cd /var/www
-sudo git clone https://github.com/Evolution-Development/PterodactylDash.git
-cd PterodactylDash
+sudo git clone https://github.com/Evolution-Development/PteroDash.git
+cd PteroDash
 sudo npm install
 echo "What is your domain? [dash.example.com]"
 read DOMAIN
@@ -34,15 +34,15 @@ read SSL
 elif [ "$SSL" = "Y" ]; then
 sudo apt -y install certbot
 certbot certonly -d $DOMAIN
-sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTPS.conf
-port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
+sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/NginxHTTPS.conf
+port=$(jq -r '.["webserver"]["port"]' /var/www/PteroDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
 sudo systemctl restart nginx
 fi
 elif [ "$SSL" = "N"]; then
-sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTP.conf
-port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
+sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/NginxHTTP.conf
+port=$(jq -r '.["webserver"]["port"]' /var/www/PteroDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
 sudo systemctl restart nginx
@@ -50,7 +50,7 @@ fi
 echo "============================"
 echo "PteroDash Install Completed!"
 echo "============================"
-echo "You will have to manually setup config.json"
+echo "You will have to manually setup config.yml"
 exit 1
 fi
 
@@ -73,8 +73,8 @@ echo "========================"
 echo "Starting File Install..."
 echo "========================"
 cd /var/www
-sudo git clone https://github.com/Evolution-Development/PterodactylDash.git
-cd PterodactylDash
+sudo git clone https://github.com/Evolution-Development/PteroDash.git
+cd PteroDash
 sudo npm install
 echo "======================="
 echo "File Install Completed!"
@@ -94,17 +94,17 @@ read SSL
 elif [ "$SSL" = "Y" ]; then
 apt -y install certbot
 certbot certonly -d $DOMAIN
-sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTPS.conf
+sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/NginxHTTPS.conf
 sudo apt-get -y -y install jq 
-port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
+port=$(jq -r '.["webserver"]["port"]' /var/www/PteroDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
 sudo systemctl restart nginx
 fi
 elif [ "$SSL" = "N"]; then
-sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/NginxHTTP.conf
+sudo wget -O /etc/nginx/sites-enabled/pterodash.conf https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/NginxHTTP.conf
 sudo apt-get -y install jq 
-port=$(jq -r '.["webserver"]["port"]' /var/www/PterodactylDash/config.json)
+port=$(jq -r '.["webserver"]["port"]' /var/www/PteroDash/config.json)
 sed -i 's/PORT/'$port'/g' /etc/nginx/sites-enabled/pterodash.conf
 sed -i 's/DOMAIN/'$DOMAIN'/g' /etc/nginx/sites-enabled/pterodash.conf
 sudo systemctl restart nginx
@@ -117,7 +117,7 @@ fi
 
 elif [ "$OPTION" = "5" ]; then
 sudo apt-get -y -y install jq 
-lv=$(curl -s 'https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/lv.json' | jq -r '.version')
+lv=$(curl -s 'https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/lv.json' | jq -r '.version')
 if [ "$lv" =  "1.0.0" ]; then
     echo "======================================================="
     echo "You're running the latest version of PteroDash."
@@ -129,7 +129,7 @@ if [ "$lv" =  "1.0.0" ]; then
     echo "======================================================="
     read UPDATE_OPTION
     if [ "$UPDATE_OPTION" = "Y" ]; then
-    bash <(curl -s https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/update.sh) 
+    bash <(curl -s https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/update.sh) 
     fi
   fi
     exit 1

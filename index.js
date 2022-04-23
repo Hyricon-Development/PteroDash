@@ -26,7 +26,7 @@ routes.forEach(file => {
 });
 
 console.log(chalk.green("[PteroDash] Checking for updates...")), () => {
-  const response = await fetch('https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/lv.json');
+  const response = await fetch('https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/lv.json');
   const lv = await response.json();
   if (lv.version == "1.0.0") {
     console.log(chalk.green("[PteroDash] You're running the latest version of PteroDash"));
@@ -35,13 +35,13 @@ console.log(chalk.green("[PteroDash] Checking for updates...")), () => {
     let update = prompt('[PteroDash] Would you like to update to the latest version? [Y/N]');
     if (update == "y") {
       console.log(chalk.green("[PteroDash] Running update script..."));
-      exec("bash <(curl -s https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/update.sh)");
+      exec("bash <(curl -s https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/update.sh)");
     }
   }
 };
 
 console.log(chalk.green("[PteroDash] Checking blacklist status...")), () => {
-  const response = await fetch('https://raw.githubusercontent.com/Evolution-Development/PterodactylDash/main/scripts/assets/blacklist.json');
+  const response = await fetch('https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/blacklist.json');
   const blacklist = await response.json().blacklist;
   for (var i = 0; i < blacklist.length; i++) {
     if (blacklist[i].domain == config.webserver.host) {

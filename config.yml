@@ -21,8 +21,8 @@ database:
     database: PteroDash
 
 pterodactyl:
-  url: https://panel.hyricon.com
-  api: Application-Key # Create a Application Key with all Read and Write Permissions
+  domain: https://panel.hyricon.com
+  key: Application-Key # Create a Application Key with all Read and Write Permissions
 
 discord: # Go to https://discord.dev and create a application
     id: Client ID of the application
