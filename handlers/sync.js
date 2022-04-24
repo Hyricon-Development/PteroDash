@@ -29,4 +29,3 @@ syncpath: () => {
   return path;
 
 }};
-
