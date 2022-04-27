@@ -1,8 +1,8 @@
-name: PteroDash
-webserver:
-  port: 8080
+app:
+  name: PteroDash
   host: https://dash.example.com
-  secret: Secret # Season Secret
+  port: 8080
+  secret: APP_SECRET
 
 smtp:
   mailfrom: support@example.com
@@ -17,7 +17,7 @@ database:
     host: 192.168.0.1
     port: 3306
     username: PteroDash
-    password: Pa$$w0rd
+    password: PASSWORD
     database: PteroDash
 
 pterodactyl:
@@ -33,9 +33,13 @@ discord: # Go to https://discord.dev and create a application
       guildid: ServerID
       registeredrole: null
     redirects: # Create the redirect links with your URL and the following callback paths and then replace the redirects
-      login: https://dash.example.com/oauth/discord/login/callback # /oauth/discord/login/callback
-      signup: https://dash.example.com/oauth/discord/signup/callback # /oauth/discord/signup/callback
+      login: https://dash.example.com/oauth/discord/login/callback # /oaut2h/discord/login/callback
+      signup: https://dash.example.com/oauth/discord/signup/callback # /oauth2/discord/signup/callback
       link: https://dash.example.com/accounts/discord/link/callback # /accounts/discord/link/callback
+
+referrals: 
+  enabled: true
+  coins: 250
 
 j4r:
   enabled: false
@@ -61,6 +65,7 @@ api:
 
 admin: 
   enabled: true
+  list:
   - EMAIL
 
 packages:

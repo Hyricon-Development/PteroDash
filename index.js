@@ -2,53 +2,69 @@
 
 const chalk = require('chalk')
 const fs = require("fs");
-const { webserver } = require('../handlers/webserver')
-const fetch = require("node-fetch");
-const prompt = require('prompt-sync')();
-const exec = require("child_process").exec
+const express = require("express");
+const session = require("express-session");
+const fetch = require("node-fetch")
 
-const config = require('../handlers/sync').syncconfig();
+const app = express();
+module.exports.app = app;;
+
+const config = require('./handlers/sync').syncconfig();
 module.exports.config = config;
 
-const userinfo  = require('../handlers/userinfo').UserInfo()
-module.exports.userinfo = userinfo;
-
-const db = require('../handlers/database').getdatabase()
+const db = require('./handlers/database').getdatabase();
 module.exports.db = db;
 
 let routes = fs.readdirSync('./routes').filter(file => file.endsWith('.js'));
 routes.forEach(file => {
   let routes = require(`./routes/${file}`);
-  routes.load(webserver, db);
-  routes.on('error', () => {
-    console.log(chalk.red("[PteroDash] An error has occured while trying to sync routes"))
-  });
+  if (typeof routes.load === 'function') routes.load(app);
 });
 
-console.log(chalk.green("[PteroDash] Checking for updates...")), () => {
-  const response = await fetch('https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/lv.json');
-  const lv = await response.json();
+console.log(chalk.green("[PteroDash] Checking for updates..."))
+fetch("https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/lv.json").then(res => Promise.resolve(res.json()).then(lv => {
   if (lv.version == "1.0.0") {
     console.log(chalk.green("[PteroDash] You're running the latest version of PteroDash"));
-  } else {
+} else {
     console.log(chalk.red("[PteroDash] You're running an outdated version of PteroDash"));
-    let update = prompt('[PteroDash] Would you like to update to the latest version? [Y/N]');
-    if (update == "y") {
-      console.log(chalk.green("[PteroDash] Running update script..."));
-      exec("bash <(curl -s https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/update.sh)");
-    }
-  }
-};
+}}));
 
-console.log(chalk.green("[PteroDash] Checking blacklist status...")), () => {
-  const response = await fetch('https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/blacklist.json');
-  const blacklist = await response.json().blacklist;
-  for (var i = 0; i < blacklist.length; i++) {
-    if (blacklist[i].domain == config.webserver.host) {
-      console.log(chalk.red("[PteroDash] You are blacklisted from PteroDash"));
-      console.log(chalk.red(`[PteroDash] Reason: ${blacklist[i].reason}`));
-    } else {
-      webserver();
+console.log(chalk.green("[PteroDash] Checking blacklist status..."))
+fetch("https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/blacklist.json").then(res => Promise.resolve(res.json()).then(blacklist => {
+  for (var i = 0; i < blacklist.blacklist.length; i++) {
+    if (blacklist.blacklist[i].domain == config.app.host) {
+      console.log("[PteroDash] You are blacklisted from PteroDash")
+      console.log(`Reason: ${blacklist.blacklist[i].reason}`)
+      process.exit(1);
     }
-  }
-}
+  }}
+))
+
+app.use(session({
+  secret: config.app.secret,
+  resave: true,
+  saveUninitialized: true
+}));
+    
+app.use(express.json({
+  inflate: true,
+  limit: '750kb',
+  reviver: null,
+  strict: true,
+  type: 'application/json',
+  verify: undefined
+}));
+    
+app.listen(config.app.port, err => {
+  if (err) {
+    console.log(chalk.red("[PteroDash] An error has occured while trying to load webserver"));
+    console.log(chalk.red(err));
+  } else {
+    console.log(chalk.green("----------------------------------------------------"));
+    console.log(chalk.green("PteroDash: v1"));
+    console.log(chalk.green("Beta: v1.0.0"));
+    console.log(chalk.green("----------------------------------------------------"));
+    console.log(chalk.green(`PteroDash is listening on ${config.app.port}`));
+    console.log(chalk.green("----------------------------------------------------"));
+    }
+ });

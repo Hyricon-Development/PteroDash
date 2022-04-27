@@ -1,3 +1,0 @@
-sqlite: ../database.sqlite
-config: ../config.yml
-routes: ../pages/routes.yml

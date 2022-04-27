@@ -1,242 +1,242 @@
 const config = require('../handlers/sync').syncconfig();
-const db = require('../handlers/databases').getdatabase()
+const db = require('../handlers/database').getdatabase()
 const jwt = require('jsonwebtoken');
 
 if (config.api.enabled == "true") {
 
-    module.exports.load = async (webserver) => {
+	module.exports.load = async (app) => {
 
-        webserver.get("/api/userinfo", async (res, req) => {
+		app.get("/api/userinfo", async (res, req) => {
 
-            const authHeader = req.headers['authorization'];
-            const token = authHeader && authHeader.split(' ')[1];
-            const email = req.body['email']
+			const authHeader = req.headers['authorization'];
+			const token = authHeader && authHeader.split(' ')[1];
+			const email = req.body['email']
 
-            if (email == null) return res.sendStatus(400);
-            
-            if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
+			if (email == null) return res.sendStatus(400);
 
-            if (token == null) return res.sendStatus(401);
+			if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
 
-            jwt.verify(token, config.api.token, err => {
-                if (err) return res.sendStatus(403)                                    
-            })
+			if (token == null) return res.sendStatus(401);
 
-            let package = await db.get(`package-${email}`);
-            let coins = await db.get(`coins-${email}`);
-            let resources = await db.get(`resources-${email}`) ? await db.get(`resources-${email}`): {
-                ram: 0,
-                disk: 0,
-                cpu: 0,
-                servers: 0,
-                databases: 0,
-                allocations: 0,
-                backups: 0
-            }
+			jwt.verify(token, config.api.token, err => {
+				if (err) return res.sendStatus(403)
+			})
 
-            res.send({
-                package: package,
-                resources: resources,
-                coins: coins
-            })               
-        })
-    }
-    webserver.post("/api/setcoins", async (res, req) => {
+			let package = await db.get(`package-${email}`);
+			let coins = await db.get(`coins-${email}`);
+			let resources = await db.get(`resources-${email}`) ? await db.get(`resources-${email}`) : {
+				ram: 0,
+				disk: 0,
+				cpu: 0,
+				servers: 0,
+				databases: 0,
+				allocations: 0,
+				backups: 0
+			}
 
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        const email = req.body['email']
-        const coins = req.body['coins']
+			res.send({
+				package: package,
+				resources: resources,
+				coins: coins
+			})
+		})
+	}
+	app.post("/api/setcoins", async (res, req) => {
 
-        if (email == null) return res.sendStatus(400);
-            
-        if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
+		const authHeader = req.headers['authorization'];
+		const token = authHeader && authHeader.split(' ')[1];
+		const email = req.body['email']
+		const coins = req.body['coins']
 
-        if (coins == null) return res.sendStatus(400);
+		if (email == null) return res.sendStatus(400);
 
-        if (token == null) return res.sendStatus(401);
+		if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
 
-        jwt.verify(token, config.api.token, err => {
-            if (err) return res.sendStatus(403)                                    
-        })
+		if (coins == null) return res.sendStatus(400);
 
-        await db.set(`coins-${email}`, coins)
+		if (token == null) return res.sendStatus(401);
 
-        return res.sendStatus(200)
-    })
-    webserver.post("/api/setpackage", async (res, req) => {
+		jwt.verify(token, config.api.token, err => {
+			if (err) return res.sendStatus(403)
+		})
 
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        const email = req.body['email']
-        const package = req.body['package']
+		await db.set(`coins-${email}`, coins)
 
-        if (email == null) return res.sendStatus(400);
-            
-        if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
+		return res.sendStatus(200)
+	})
+	app.post("/api/setpackage", async (res, req) => {
 
-        if (package == null) return res.sendStatus(400);
+		const authHeader = req.headers['authorization'];
+		const token = authHeader && authHeader.split(' ')[1];
+		const email = req.body['email']
+		const package = req.body['package']
 
-        if (token == null) return res.sendStatus(401);
+		if (email == null) return res.sendStatus(400);
 
-        jwt.verify(token, config.api.token, err => {
-            if (err) return res.sendStatus(403)                                    
-        })
+		if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
 
-        await db.set(`package-${email}`, package)
+		if (package == null) return res.sendStatus(400);
 
-        return res.sendStatus(200)
-    })
-    webserver.post("/api/setresources", async (res, req) => {
+		if (token == null) return res.sendStatus(401);
 
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        const email = req.body['email']
-        const ram = req.body['ram']
-        const disk = req.body['disk']
-        const cpu = req.body['cpu']
-        const servers = req.body['servers']
-        const databases = req.body['databases']
-        const allocations = req.body['allocations']
-        const backups = req.body['backups']
+		jwt.verify(token, config.api.token, err => {
+			if (err) return res.sendStatus(403)
+		})
 
-        if (email == null) return res.sendStatus(400);
-            
-        if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
+		await db.set(`package-${email}`, package)
 
-        if (ram == null) return res.sendStatus(400);
-        if (disk == null) return res.sendStatus(400);
-        if (cpu == null) return res.sendStatus(400);
-        if (servers == null) return res.sendStatus(400);
-        if (databases == null) return res.sendStatus(400);
-        if (allocations == null) return res.sendStatus(400);
-        if (backups == null) return res.sendStatus(400);
+		return res.sendStatus(200)
+	})
+	app.post("/api/setresources", async (res, req) => {
 
-        if (token == null) return res.sendStatus(401);
+		const authHeader = req.headers['authorization'];
+		const token = authHeader && authHeader.split(' ')[1];
+		const email = req.body['email']
+		const ram = req.body['ram']
+		const disk = req.body['disk']
+		const cpu = req.body['cpu']
+		const servers = req.body['servers']
+		const databases = req.body['databases']
+		const allocations = req.body['allocations']
+		const backups = req.body['backups']
 
-        jwt.verify(token, config.api.token, err => {
-            if (err) return res.sendStatus(403)                                    
-        })
+		if (email == null) return res.sendStatus(400);
 
-        let resources = await db.get(`resources-${useremail}`);
-        resources.ram = ram
-        resources.disk = disk
-        resources.cpu = cpu
-        resources.servers = servers
-        resources.databases = databases
-        resources.allocations = allocations
-        resources.backups = backups
-        
-        await db.set(`resources-${email}`, resources)
+		if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
 
-        return res.sendStatus(200)
-    })
-    webserver.post("/api/blacklist", async (res, req) => {
+		if (ram == null) return res.sendStatus(400);
+		if (disk == null) return res.sendStatus(400);
+		if (cpu == null) return res.sendStatus(400);
+		if (servers == null) return res.sendStatus(400);
+		if (databases == null) return res.sendStatus(400);
+		if (allocations == null) return res.sendStatus(400);
+		if (backups == null) return res.sendStatus(400);
 
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        const email = req.body['email']
+		if (token == null) return res.sendStatus(401);
 
-        if (email == null) return res.sendStatus(400);
-            
-        if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
+		jwt.verify(token, config.api.token, err => {
+			if (err) return res.sendStatus(403)
+		})
 
-        if (token == null) return res.sendStatus(401);
+		let resources = await db.get(`resources-${useremail}`);
+		resources.ram = ram
+		resources.disk = disk
+		resources.cpu = cpu
+		resources.servers = servers
+		resources.databases = databases
+		resources.allocations = allocations
+		resources.backups = backups
 
-        jwt.verify(token, config.api.token, err => {
-            if (err) return res.sendStatus(403)                                    
-        })
+		await db.set(`resources-${email}`, resources)
 
-        let account = db.get(`user-${email}`)
-        account.blacklist = true
+		return res.sendStatus(200)
+	})
+	app.post("/api/blacklist", async (res, req) => {
 
-        await db.set(`user-${email}`, account)
+		const authHeader = req.headers['authorization'];
+		const token = authHeader && authHeader.split(' ')[1];
+		const email = req.body['email']
 
-        return res.sendStatus(200)
-    })
-    webserver.post("/api/unblacklist", async (res, req) => {
+		if (email == null) return res.sendStatus(400);
 
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        const email = req.body['email']
+		if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
 
-        if (email == null) return res.sendStatus(400);
-            
-        if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
+		if (token == null) return res.sendStatus(401);
 
-        if (token == null) return res.sendStatus(401);
+		jwt.verify(token, config.api.token, err => {
+			if (err) return res.sendStatus(403)
+		})
 
-        jwt.verify(token, config.api.token, err => {
-            if (err) return res.sendStatus(403)                                    
-        })
+		let account = db.get(`user-${email}`)
+		account.blacklist = true
 
-        let account = db.get(`user-${email}`)
-        account.blacklist = false
+		await db.set(`user-${email}`, account)
 
-        await db.set(`user-${email}`, account)
+		return res.sendStatus(200)
+	})
+	app.post("/api/unblacklist", async (res, req) => {
 
-        return res.sendStatus(200)
-    })
-    webserver.post("/api/createcoupon", async (res, req) => {
+		const authHeader = req.headers['authorization'];
+		const token = authHeader && authHeader.split(' ')[1];
+		const email = req.body['email']
 
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        const code = req.body['code']
-        const coins = req.body['coins']
-        const ram = req.body['ram']
-        const disk = req.body['disk']
-        const cpu = req.body['cpu']
-        const servers = req.body['servers']
-        const databases = req.body['databases']
-        const allocations = req.body['allocations']
-        const backups = req.body['backups']            
+		if (email == null) return res.sendStatus(400);
 
-        if (code == null) return res.sendStatus(400);
-        if (coins == null) return res.sendStatus(400);
-        if (ram == null) return res.sendStatus(400);
-        if (disk == null) return res.sendStatus(400);
-        if (cpu == null) return res.sendStatus(400);
-        if (servers == null) return res.sendStatus(400);
-        if (databases == null) return res.sendStatus(400);
-        if (allocations == null) return res.sendStatus(400);
-        if (backups == null) return res.sendStatus(400);
-        if (token == null) return res.sendStatus(401);
+		if (!(await db.get(`user-${email}`))) return res.sendStatus(400)
 
-        jwt.verify(token, config.api.token, err => {
-            if (err) return res.sendStatus(403)                                    
-        })
+		if (token == null) return res.sendStatus(401);
 
-        await db.set(`coupon-${code}`, {
-            coins: coins,
-            ram: ram,
-            disk: disk,
-            cpu: cpu,
-            servers: servers,
-            databases: databases,
-            allocations: allocations,
-            backups: backups
-        });
+		jwt.verify(token, config.api.token, err => {
+			if (err) return res.sendStatus(403)
+		})
 
-        return res.sendStatus(200)
-    })
-    webserver.post("/api/revokecoupon", async (res, req) => {
+		let account = db.get(`user-${email}`)
+		account.blacklist = false
 
-        const authHeader = req.headers['authorization'];
-        const token = authHeader && authHeader.split(' ')[1];
-        const code = req.body['code']
-        
-        if (code == null) return res.sendStatus(400);
+		await db.set(`user-${email}`, account)
 
-        if (!(await db.get(`coupon-${code}`))) return res.sendStatus(400)
+		return res.sendStatus(200)
+	})
+	app.post("/api/createcoupon", async (res, req) => {
 
-        if (token == null) return res.sendStatus(401);
+		const authHeader = req.headers['authorization'];
+		const token = authHeader && authHeader.split(' ')[1];
+		const code = req.body['code']
+		const coins = req.body['coins']
+		const ram = req.body['ram']
+		const disk = req.body['disk']
+		const cpu = req.body['cpu']
+		const servers = req.body['servers']
+		const databases = req.body['databases']
+		const allocations = req.body['allocations']
+		const backups = req.body['backups']
 
-        jwt.verify(token, config.api.token, err => {
-            if (err) return res.sendStatus(403)                                    
-        })
+		if (code == null) return res.sendStatus(400);
+		if (coins == null) return res.sendStatus(400);
+		if (ram == null) return res.sendStatus(400);
+		if (disk == null) return res.sendStatus(400);
+		if (cpu == null) return res.sendStatus(400);
+		if (servers == null) return res.sendStatus(400);
+		if (databases == null) return res.sendStatus(400);
+		if (allocations == null) return res.sendStatus(400);
+		if (backups == null) return res.sendStatus(400);
+		if (token == null) return res.sendStatus(401);
 
-        await db.delete(`coupon-${code}`);
+		jwt.verify(token, config.api.token, err => {
+			if (err) return res.sendStatus(403)
+		})
 
-        return res.sendStatus(200)
-    })
+		await db.set(`coupon-${code}`, {
+			coins: coins,
+			ram: ram,
+			disk: disk,
+			cpu: cpu,
+			servers: servers,
+			databases: databases,
+			allocations: allocations,
+			backups: backups
+		});
+
+		return res.sendStatus(200)
+	})
+	app.post("/api/revokecoupon", async (res, req) => {
+
+		const authHeader = req.headers['authorization'];
+		const token = authHeader && authHeader.split(' ')[1];
+		const code = req.body['code']
+
+		if (code == null) return res.sendStatus(400);
+
+		if (!(await db.get(`coupon-${code}`))) return res.sendStatus(400)
+
+		if (token == null) return res.sendStatus(401);
+
+		jwt.verify(token, config.api.token, err => {
+			if (err) return res.sendStatus(403)
+		})
+
+		await db.delete(`coupon-${code}`);
+
+		return res.sendStatus(200)
+	})
 }

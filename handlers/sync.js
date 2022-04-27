@@ -1,31 +1,17 @@
 const fs = require("fs");
-const chalk = require('chalk')
+const yaml = require('js-yaml')
 
 module.exports = {
 
 syncconfig: () => {
 
-  let config = YAML.parse(fs.readFileSync(syncpath().config));
-  config.on('error', () => {
-    console.log(chalk.red("[PteroDash] An error has occured while trying to read config.yml"));
-  });
+  let config = yaml.load(fs.readFileSync("./config.yml"));
   return config;
 
 },
 syncroutes: () => {
 
-  let routes = YAML.parse(fs.readFileSync(syncpath().routes));
-  routes.on('error', () => {
-    console.log(chalk.red("[PteroDash] An error has occured while trying to read routes.yml"));
-  });
+  let routes = yaml.load(fs.readFileSync("./pages/routes.yml"));
   return routes;
-},
-syncpath: () => {
-
-  let path = YAML.parse(fs.readFileSync("./path.yml"));
-  path.on('error', () => {
-    console.log(chalk.red("[PteroDash] An error has occured while trying to read path.yml"));
-  });
-  return path;
-
-}};
+  
+}}

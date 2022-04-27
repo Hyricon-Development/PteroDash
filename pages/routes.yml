@@ -1,17 +1,17 @@
-admin: 
-  setcoins: admin/setcoins.ejs
-  userinfo: admin/userinfo.ejs
-  coupon: admin/coupon.ejs
-  package: admin/package.ejs
-  
+index: home.ejs
 pages:
   login: login.ejs
-  home: home.ejs
   store: store.ejs
-  server/create: create.ejs
+  servers/create: create.ejs
   earn: earn.ejs
   lv: lv.ejs
   j4r: j4r.ejs
+  referrals: referrals.ejs
+  admin: admin/admin.ejs
+  admin/coins: admin/coins.ejs
+  admin/users: admin/users.ejs
+  admin/coupon: admin/coupon.ejs
+  admin/package: admin/package.ejs
 
 redirects: 
   callback: /home
@@ -19,3 +19,22 @@ redirects:
   cant_afford: /store?error=Cant_Afford
   store_error: /store?error=An_Error_Occured
   store_sucess: /store?sucess=true
+  password_reset: /login?reset=sucess
+
+mustbeloggedin: 
+  - /
+  - /store
+  - /servers/create
+  - /earn
+  - /lv
+  - /j4r
+  - /referrals
+
+mustbeadmin:
+  - /admin
+  - /admin/coins
+  - /admin/users
+  - /admin/coupon
+  - /admin/package
+
+  
