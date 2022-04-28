@@ -1,11 +1,11 @@
 {
     "blacklist": [
         {
-            "domain": "client.abusenodes.com",
+            "domain": "https://client.abusenodes.com",
             "reason": "Free Trials"
         },
         {
-            "domain": "https://dash.example.com",
+            "domain": "https://dash.randomhostlol.com",
             "reason": "Free Trials"
         }
     ]
