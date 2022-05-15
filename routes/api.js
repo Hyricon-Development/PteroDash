@@ -1,10 +1,9 @@
 const config = require('../handlers/sync').syncconfig();
 const db = require('../handlers/database').getdatabase()
 const jwt = require('jsonwebtoken');
+const app = require('../handlers/app').app();
 
 if (config.api.enabled == "true") {
-
-	module.exports.load = async (app) => {
 
 		app.get("/api/userinfo", async (res, req) => {
 
@@ -22,7 +21,16 @@ if (config.api.enabled == "true") {
 				if (err) return res.sendStatus(403)
 			})
 
-			let package = await db.get(`package-${email}`);
+			let package = await db.get(`package-${email}`) ? await db.get(`package-${email}`) : {
+				package: null,
+				ram: 0,
+				disk: 0,
+				cpu: 0,
+				servers: 0,
+				databases: 0,
+				allocations: 0,
+				backups: 0
+			}
 			let coins = await db.get(`coins-${email}`);
 			let resources = await db.get(`resources-${email}`) ? await db.get(`resources-${email}`) : {
 				ram: 0,
@@ -239,4 +247,3 @@ if (config.api.enabled == "true") {
 
 		return res.sendStatus(200)
 	})
-}

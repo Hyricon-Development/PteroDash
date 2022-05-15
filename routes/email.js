@@ -3,8 +3,7 @@ const db = require('../handlers/database').getdatabase()
 const config = require('../handlers/sync').syncconfig()
 const routes = require('../handlers/sync').syncroutes()
 const fetch = require('node-fetch');
-
-module.exports.load = async function (app) {
+const app = require('../handlers/app').app();
 
   app.post("/oauth/email/login", async (req, res) => {
 
@@ -42,7 +41,7 @@ module.exports.load = async function (app) {
     const coins = await db.get(`coins-${email}`)
     const resources = await db.get(`resources-${email}`)
 
-    req.session.data = {
+    req.session = {
       userinfo: account,
       coins: coins,
       resources: resources,
@@ -63,7 +62,7 @@ module.exports.load = async function (app) {
     const last_name = req.body.username
     const referral = req.body.referral
 
-    if (!email || !password || !password_confirm || !username || !first_name || !last_name) return res.redirect('/login')
+    if (!email || !password || !password_confirm || !username || !first_name || !last_name) return res.redirect('/login?error=MISSING_INFO')
     
     if (password !== password_confirm) return res.send('<br> Password is not the same as confirm password </br>')
     
@@ -142,7 +141,7 @@ module.exports.load = async function (app) {
     await db.set(`package-${email}`, plan);
     await db.set(`referrals-${userinfo.code}`, referrals);
 
-    req.session.data = {
+    req.session = {
       userinfo: userinfo,
       coins: 0,
       resources: resources,
@@ -198,12 +197,15 @@ module.exports.load = async function (app) {
 
     const id = makeid(8);
 
-    var content = `<h1>${config.name}</h1><br>We've received a request for resetting your account password</br>If this was you please click this <a href="${config.webserver.host}/reset/password?id=${id}">link</a><br>If this wasn't you, you can ignore this email</br>`;
+    let referer = req.headers.referer
+
+    var content = `<h1>${config.name}</h1><br>We've received a request for resetting your account password</br>If this was you please click this <a href="${referer}/reset/password?id=${id}">link</a><br>If this wasn't you, you can ignore this email</br>`;
 
     mailer.sendMail({
       from: config.smtp.mailfrom,
+
       to: email,
-      subject: `Reset ${config.name} password`,
+      subject: `Reset ${config.app.name} password`,
       html: content,
     });
     
@@ -220,6 +222,8 @@ module.exports.load = async function (app) {
       const password = req.body.password
       const password_confirm = req.body.password_confirm
 
+      let account = await db.get(`user-${email}`)
+
       if (!id) return res.redirect(`/login`)
 
       if (id !== account.id) return res.redirect('/login')
@@ -227,8 +231,6 @@ module.exports.load = async function (app) {
       if (!password || !password_confirm) return res.redirect(`/reset/password?id=${id}`)
 
       if (password !== password_confirm) return res.redirect(`/reset/password?id=${id}`)
-
-      let account = await db.get(`user-${email}`)
     
       account.password = password
       account.resetid = null
@@ -237,7 +239,6 @@ module.exports.load = async function (app) {
 
       return res.redirect(routes.redirects.password_reset)
     });
-  }
 
   function makeid(length) {
     var result = '';

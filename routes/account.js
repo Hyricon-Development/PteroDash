@@ -1,10 +1,9 @@
 const db = require('../handlers/database').getdatabase()
-
-module.exports.load = async function (app) {
+const app = require('../handlers/app').app();
 
   app.post("/accounts/details/reset", async (req, res) => {
         
-        const email = req.session.data.userinfo.email
+        const email = req.session.userinfo.email
         const newemail = req.body.email
         const username = req.body.username
         const first_name = req.body.first_name
@@ -67,14 +66,13 @@ module.exports.load = async function (app) {
 
         const panelinfo = (await response.json()).attributes;
 
-        req.session.data = {
-            userinfo: account,
-            coins: coins,
-            resources: resources,
-            package: package,
-            panelinfo: panelinfo
-          };
+        req.session = {
+          userinfo: account,
+          coins: coins,
+          resources: resources,
+          package: package,
+          panelinfo: panelinfo
+        };
 
         return res.redirect('/profile/settings')
     });
-}

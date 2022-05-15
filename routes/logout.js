@@ -1,16 +1,12 @@
 const routes = require('../handlers/sync').syncroutes()
-
-module.exports.load = async (app) => {
+const app = require('../handlers/app').app();
 
     app.get("/logout", async (req, res) => {
 
-        if (!req.session.data)
-            return res.send('You are not signed in');
+        if (!req.session)
+            return res.send('<br> You are not signed in </br>');
 
-        delete req.session.data;
+        req.session.destroy();
 
         return res.redirect(routes.redirects.logout);
     });
-
-    app.get("/rickroll", async (res) => res.send('hi'))
-}

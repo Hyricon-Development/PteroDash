@@ -1,6 +1,5 @@
 app:
   name: PteroDash
-  host: https://dash.example.com
   port: 8080
   secret: APP_SECRET
 
@@ -9,7 +8,7 @@ smtp:
   host: 192.168.0.1
   port: 4242
   username: PteroDash
-  password: Pa$$w0rd
+  password: PASSWORD
 
 database:
   select: sqlite # Select the database for PteroDash
@@ -37,9 +36,10 @@ discord: # Go to https://discord.dev and create a application
       signup: https://dash.example.com/oauth/discord/signup/callback # /oauth2/discord/signup/callback
       link: https://dash.example.com/accounts/discord/link/callback # /accounts/discord/link/callback
 
-referrals: 
-  enabled: true
-  coins: 250
+linkvertise: 
+  enabled: true 
+  userid: 00000
+  coins: 25
 
 j4r:
   enabled: false
@@ -59,9 +59,9 @@ RolePackage:
   list:
     ROLEID: PACKAGE 
 
-api:
-  enabled: false # Set enabled to "true" if you want to enable the PteroDash API system
-  token: Token
+api: # This is just a placeholder, I'll replace with a database type API system soon.
+  enabled: false
+  token: API_TOKEN
 
 admin: 
   enabled: true
@@ -116,7 +116,7 @@ store: # You must have coins enabled for this to work
   allocations:
     cost: 50
     per: 1
-  backup:
+  backups:
     cost: 50
     per: 1
 

@@ -5,15 +5,8 @@ const fs = require("fs");
 const express = require("express");
 const session = require("express-session");
 const fetch = require("node-fetch")
-
-const app = express();
-module.exports.app = app;;
-
 const config = require('./handlers/sync').syncconfig();
-module.exports.config = config;
-
-const db = require('./handlers/database').getdatabase();
-module.exports.db = db;
+const app = require('./handlers/app').app();
 
 let routes = fs.readdirSync('./routes').filter(file => file.endsWith('.js'));
 routes.forEach(file => {
@@ -64,7 +57,8 @@ app.listen(config.app.port, err => {
     console.log(chalk.green("PteroDash: v1"));
     console.log(chalk.green("Beta: v1.0.0"));
     console.log(chalk.green("----------------------------------------------------"));
-    console.log(chalk.green(`PteroDash is listening on ${config.app.port}`));
+    console.log(chalk.green(`PteroDash is listening for connections on ${config.app.port}`));
     console.log(chalk.green("----------------------------------------------------"));
     }
  });
+

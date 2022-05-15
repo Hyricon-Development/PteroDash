@@ -7,6 +7,7 @@ pages:
   lv: lv.ejs
   j4r: j4r.ejs
   referrals: referrals.ejs
+  notfound: 404.ejs
   admin: admin/admin.ejs
   admin/coins: admin/coins.ejs
   admin/users: admin/users.ejs
@@ -15,11 +16,12 @@ pages:
 
 redirects: 
   callback: /home
-  invalid_amount: /store?error=Invalid_Amount
-  cant_afford: /store?error=Cant_Afford
-  store_error: /store?error=An_Error_Occured
+  invalid_amount: /store?error=INVALID_AMOUNT
+  cant_afford: /store?error=CANT_AFFORD
+  store_error: /store?error=AN_ERROR_OCCURED
   store_sucess: /store?sucess=true
   password_reset: /login?reset=sucess
+  missing_info: /store?error=MISSING_INFO
 
 mustbeloggedin: 
   - /

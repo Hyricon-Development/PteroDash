@@ -1,6 +1,4 @@
 const express = require("express");
-
-module.exports.load = async function (app) {
+const app = require('../handlers/app').app();
     
-    app.use('/assets', express.static('../pages/assets'));
-}
+app.use('/assets', express.static('./pages/assets'));
