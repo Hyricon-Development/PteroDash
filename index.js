@@ -8,12 +8,6 @@ const fetch = require("node-fetch")
 const config = require('./handlers/sync').syncconfig();
 const app = require('./handlers/app').app();
 
-let routes = fs.readdirSync('./routes').filter(file => file.endsWith('.js'));
-routes.forEach(file => {
-  let routes = require(`./routes/${file}`);
-  if (typeof routes.load === 'function') routes.load(app);
-});
-
 console.log(chalk.green("[PteroDash] Checking for updates..."))
 fetch("https://raw.githubusercontent.com/Evolution-Development/PteroDash/main/scripts/assets/lv.json").then(res => Promise.resolve(res.json()).then(lv => {
   if (lv.version == "1.0.0") {
@@ -61,4 +55,10 @@ app.listen(config.app.port, err => {
     console.log(chalk.green("----------------------------------------------------"));
     }
  });
+
+let routes = fs.readdirSync('./routes').filter(file => file.endsWith('.js'));
+routes.forEach(file => {
+  let routes = require(`./routes/${file}`);
+  if (typeof routes.load === 'function') routes.load(app);
+});
 
