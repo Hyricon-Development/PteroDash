@@ -56,9 +56,5 @@ app.listen(config.app.port, err => {
     }
  });
 
-let routes = fs.readdirSync('./routes').filter(file => file.endsWith('.js'));
-routes.forEach(file => {
-  let routes = require(`./routes/${file}`);
-  if (typeof routes.load === 'function') routes.load(app);
-});
+fs.readdirSync('./routes').filter(file => file.endsWith('.js'));
 
